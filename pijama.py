@@ -2,48 +2,43 @@
 import os
 import tkinter as tk
 from functools import partial
-from tkinter import messagebox
-try:
-	from picamera import PiCamera
-	camera = PiCamera()
-except:
-	print("no picamera")
-from time import sleep
-import webbrowser
+from tkinter import *
 
 root = tk.Tk()
 root.geometry("800x440")
 root.configure(bg="white")
+frame = Frame(root, bg="white")
+frame.pack(fill='both')
 
 def chosen(d):
   runfile = os.path.join(d, 'run.py')
   if (os.path.isfile(runfile)):
     exec(open(runfile).read())
+  else:
+    clear()
+    show(d)
+def clear():
+  for child in frame.winfo_children():
+    child.destroy()
 
-def photoCallBack():
-   camera.start_preview()
-   sleep(5)
-   camera.stop_preview()
+def show(path):
+  if (path == 'menu'):
+    button = tk.Button(frame, text="EXIT", command=exit, height=7, width=13, borderwidth=0,
+          bg="#88f", activebackground="#bbf").grid(row=0, column=0, padx=5, pady=5)
+  else:
+    button = tk.Button(frame, text="<", command=partial(show, os.path.dirname(path)), height=7, width=13, borderwidth=0,
+          bg="#88f", activebackground="#bbf").grid(row=0, column=0, padx=5, pady=5)
+  col = 1
+  row = 0
+  for d in sorted([n for n in os.listdir(path) if os.path.isdir(os.path.join(path, n))]):
+    chosenDir = os.path.join(path, d)
+    button = tk.Button(frame, text=d, command=partial(chosen, chosenDir), height=7, width=13, borderwidth=0,
+        bg="#88f", activebackground="#bbf").grid(row=row, column=col, padx=5, pady=5)
+    col = col + 1
+    if (col == 5):
+      row = row + 1
+      col = 0
 
-col = 0
-row = 0
-for d in sorted([n for n in os.listdir('menu') if os.path.isdir(os.path.join('menu', n))]):
-  chosenDir = os.path.join('menu', d)
-  button = tk.Button(root, text=d, command=partial(chosen, chosenDir), height=7, width=13, borderwidth=0,
-      bg="#88f", activebackground="#bbf").grid(row=row, column=col, padx=5, pady=5)
-  col = col + 1
-  if (col == 5):
-    row = row + 1
-    col = 0
-
-#for row in range(0, 4):
-#  button = tk.Button(root, text="Hello", command=helloCallBack, height=7, width=13, borderwidth=0, bg="#f88", activebackground="#f88").grid(row=row, column=0, padx=5, pady=5)
-#  #button.pack(padx=20, pady=20, side=tk.LEFT, fill=tk.BOTH, expand=tk.TRUE)
-#  photoButton = tk.Button(root, text="Photo", command=photoCallBack, height=7, width=13, borderwidth=0).grid(row=row, column=1, padx=5, pady=5)
-#  #photoButton.pack(padx=20, pady=20, side=tk.LEFT, fill=tk.BOTH, expand=tk.TRUE)
-#
-#  button = tk.Button(root, text="Hello", command=helloCallBack, height=7, width=13, borderwidth=0, bg="#8f8", activebackground="#8f8").grid(row=row, column=2, padx=5, pady=5)
-#  button = tk.Button(root, text="Hello", command=helloCallBack, height=7, width=13, borderwidth=0, bg="#f88", activebackground="#f88").grid(row=row, column=3, padx=5, pady=5)
-#  button = tk.Button(root, text="Hello", command=helloCallBack, height=7, width=13, borderwidth=0, bg="#f88", activebackground="#f88").grid(row=row, column=4, padx=5, pady=5)
+show('menu')
 
 root.mainloop()
