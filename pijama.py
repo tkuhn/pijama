@@ -11,9 +11,12 @@ frame = Frame(root, bg="white")
 frame.pack(fill='both')
 
 def chosen(d):
-  runfile = os.path.join(d, 'run.py')
-  if (os.path.isfile(runfile)):
-    exec(open(runfile).read())
+  prunfile = os.path.join(d, 'run.py')
+  srunfile = os.path.join(d, 'run.sh')
+  if (os.path.isfile(prunfile)):
+    exec(open(prunfile).read())
+  if (os.path.isfile(srunfile)):
+    os.system(srunfile)
   else:
     clear()
     show(d)
