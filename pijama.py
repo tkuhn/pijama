@@ -10,6 +10,8 @@ root.configure(bg="white")
 frame = Frame(root, bg="white")
 frame.pack(fill='both')
 
+images = {}
+
 def chosen(d):
   prunfile = os.path.join(d, 'run.py')
   srunfile = os.path.join(d, 'run.sh')
@@ -36,7 +38,13 @@ def show(path):
   for d in sorted([n for n in os.listdir(path) if os.path.isdir(os.path.join(path, n))]):
     chosenDir = os.path.join(path, d)
     button = tk.Button(frame, text=d, command=partial(chosen, chosenDir), height=7, width=13, borderwidth=0,
-        bg="#88f", activebackground="#bbf").grid(row=row, column=col, padx=5, pady=5)
+        bg="#88f", activebackground="#bbf")
+    imgfile = os.path.join(chosenDir, 'img.png')
+    if (os.path.isfile(imgfile)):
+        images[imgfile] = PhotoImage(file=imgfile)
+        button = tk.Button(frame, image=images[imgfile], command=partial(chosen, chosenDir), height=120, width=120, borderwidth=0,
+            bg="#88f", activebackground="#bbf")
+    button.grid(row=row, column=col, padx=5, pady=5)
     col = col + 1
     if (col == 5):
       row = row + 1
