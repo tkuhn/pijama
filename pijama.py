@@ -15,6 +15,8 @@ frame = Frame(root, bg="white")
 frame.pack(fill='both')
 
 images = {}
+pixelimgfile = os.path.join(dname, 'aux/pixel.png')
+images[pixelimgfile] = PhotoImage(file=pixelimgfile)
 
 def chosen(d):
   prunfile = os.path.join(d, 'run.py')
@@ -32,21 +34,21 @@ def clear():
 
 def show(path):
   if (path == 'menu'):
-    button = tk.Button(frame, text="EXIT", command=exit, height=7, width=13, borderwidth=0,
+    button = tk.Button(frame, text="EXIT", image=images[pixelimgfile], compound="c", command=exit, height=120, width=120, borderwidth=0,
           bg="#88f", activebackground="#bbf").grid(row=0, column=0, padx=5, pady=5)
   else:
-    button = tk.Button(frame, text="<", command=partial(show, os.path.dirname(path)), height=7, width=13, borderwidth=0,
+    button = tk.Button(frame, text="<", image=images[pixelimgfile], compound="c", command=partial(show, os.path.dirname(path)), height=120, width=120, borderwidth=0,
           bg="#88f", activebackground="#bbf").grid(row=0, column=0, padx=5, pady=5)
   col = 1
   row = 0
   for d in sorted([n for n in os.listdir(path) if os.path.isdir(os.path.join(path, n))]):
     chosenDir = os.path.join(path, d)
-    button = tk.Button(frame, text=d, command=partial(chosen, chosenDir), height=7, width=13, borderwidth=0,
+    button = tk.Button(frame, text=d, image=images[pixelimgfile], compound="c", command=partial(chosen, chosenDir), height=120, width=120, borderwidth=0,
         bg="#88f", activebackground="#bbf")
     imgfile = os.path.join(chosenDir, 'img.png')
     if (os.path.isfile(imgfile)):
         images[imgfile] = PhotoImage(file=imgfile)
-        button = tk.Button(frame, image=images[imgfile], command=partial(chosen, chosenDir), height=120, width=120, borderwidth=0,
+        button = tk.Button(frame, text="xxx", image=images[imgfile], command=partial(chosen, chosenDir), height=120, width=120, borderwidth=0,
             bg="#88f", activebackground="#bbf")
     button.grid(row=row, column=col, padx=5, pady=5)
     col = col + 1
