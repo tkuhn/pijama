@@ -4,6 +4,10 @@ import tkinter as tk
 from functools import partial
 from tkinter import *
 
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 root = tk.Tk()
 root.geometry("800x440")
 root.configure(bg="white")
