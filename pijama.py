@@ -17,6 +17,8 @@ frame.pack(fill='both')
 images = {}
 pixelimgfile = os.path.join(dname, 'aux/pixel.png')
 images[pixelimgfile] = PhotoImage(file=pixelimgfile)
+exitimgfile = os.path.join(dname, 'aux/exit.png')
+images[exitimgfile] = PhotoImage(file=exitimgfile)
 
 def chosen(d):
   prunfile = os.path.join(d, 'run.py')
@@ -35,7 +37,7 @@ def clear():
 
 def show(path):
   if (path == 'menu'):
-    button = tk.Button(frame, text="EXIT", image=images[pixelimgfile], compound="c", command=exit, height=120, width=120, borderwidth=0,
+    button = tk.Button(frame, text="", image=images[exitimgfile], compound="c", command=exit, height=120, width=120, borderwidth=0,
           bg="#f88", activebackground="#fbb", padx=0, pady=0).grid(row=0, column=0, padx=8, pady=8)
   else:
     button = tk.Button(frame, text="<", image=images[pixelimgfile], compound="c", command=partial(show, os.path.dirname(path)), height=120, width=120, borderwidth=0,
