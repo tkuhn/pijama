@@ -23,12 +23,12 @@ backimgfile = os.path.join(dname, 'aux/back.png')
 images[backimgfile] = PhotoImage(file=backimgfile)
 
 def chosen(d):
-  prunfile = os.path.join(d, 'run.py')
   srunfile = os.path.join(d, 'run.sh')
-  if (os.path.isfile(prunfile)):
-    exec(open(prunfile).read())
-  elif (os.path.isfile(srunfile)):
+  prunfile = os.path.join(d, 'run.py')
+  if (os.path.isfile(srunfile)):
     os.system(srunfile)
+  elif (os.path.isfile(prunfile)):
+    exec(open(prunfile).read())
   else:
     clear()
     show(d)
