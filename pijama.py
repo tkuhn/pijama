@@ -11,6 +11,7 @@ os.chdir(dname)
 root = tk.Tk()
 root.geometry("800x440")
 root.configure(bg="white")
+root.title("Pijama")
 frame = Frame(root, bg="white")
 frame.pack(fill='both')
 
