@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import os
+import subprocess
 import tkinter as tk
 from functools import partial
 from tkinter import *
@@ -27,9 +28,9 @@ def chosen(d):
   srunfile = os.path.join(d, 'run.sh')
   prunfile = os.path.join(d, 'run.py')
   if (os.path.isfile(srunfile)):
-    os.system(srunfile)
+    subprocess.Popen(["bash", srunfile])
   elif (os.path.isfile(prunfile)):
-    exec(open(prunfile).read())
+    subprocess.Popen(["python", prunfile])
   else:
     clear()
     show(d)
