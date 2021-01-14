@@ -4,6 +4,7 @@ import subprocess
 import tkinter as tk
 from functools import partial
 from tkinter import *
+import tkinter.font as font
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
@@ -23,6 +24,8 @@ exitimgfile = os.path.join(dname, 'aux/exit.png')
 images[exitimgfile] = PhotoImage(file=exitimgfile)
 backimgfile = os.path.join(dname, 'aux/back.png')
 images[backimgfile] = PhotoImage(file=backimgfile)
+
+buttonfont = font.Font(size=20)
 
 def chosen(d):
   srunfile = os.path.join(d, 'run.sh')
@@ -64,8 +67,12 @@ def show(path):
         button = tk.Button(frame, image=images[imgfile], text="", compound="c", command=partial(chosen, chosenDir), height=120, width=120, borderwidth=0, highlightthickness = 0,
             bg=bg_color, activebackground=abg_color, padx=0, pady=0).grid(row=row, column=col, padx=8, pady=8)
     else:
-        button = tk.Button(frame, image=images[pixelimgfile], text=d, compound="c", command=partial(chosen, chosenDir), height=120, width=120, borderwidth=0, highlightthickness = 0,
-    	    bg=bg_color, activebackground=abg_color, padx=0, pady=0).grid(row=row, column=col, padx=8, pady=8)
+        d = re.sub(r'^[0-9]+_', '', d)
+        d = re.sub(r'_', ' ', d)
+        button = tk.Button(frame, image=images[pixelimgfile], text=d, wraplength=100, compound="c", command=partial(chosen, chosenDir), height=120, width=120, borderwidth=0, highlightthickness = 0,
+    	    bg=bg_color, activebackground=abg_color, padx=0, pady=0)
+        button['font'] = buttonfont
+        button.grid(row=row, column=col, padx=8, pady=8)
     col = col + 1
     if (col == 5):
       row = row + 1
