@@ -40,6 +40,7 @@ def clear():
     child.destroy()
 
 def show(path):
+  clear()
   if (path == 'menu'):
     button = tk.Button(frame, text="", image=images[exitimgfile], compound="c", command=exit, height=120, width=120, borderwidth=0, highlightthickness = 0,
           bg="#f88", activebackground="#fbb", padx=0, pady=0).grid(row=0, column=0, padx=8, pady=8)
@@ -49,6 +50,8 @@ def show(path):
   col = 1
   row = 0
   for d in sorted([n for n in os.listdir(path) if os.path.isdir(os.path.join(path, n))]):
+    if (d == ".git"):
+      continue
     chosenDir = os.path.join(path, d)
     bg_color = "#ee6"
     abg_color = "#ff8"
