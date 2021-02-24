@@ -31,9 +31,9 @@ buttonfont = font.Font(size=20)
 def chosen(d):
   srunfile = os.path.join(d, 'run.sh')
   prunfile = os.path.join(d, 'run.py')
-  if (os.path.isfile(srunfile)):
+  if os.path.isfile(srunfile):
     subprocess.Popen(["bash", srunfile])
-  elif (os.path.isfile(prunfile)):
+  elif os.path.isfile(prunfile):
     subprocess.Popen(["python", prunfile])
   else:
     clear()
@@ -80,7 +80,7 @@ def runnable(dir):
 
 def show(path):
   clear()
-  if (path == 'menu'):
+  if path == 'menu':
     button = mkbutton(exit_img, exit, "#f88", 0, 0)
   else:
     button = mkbutton(back_img, partial(show, os.path.dirname(path)), "#f88", 0, 0)
@@ -88,7 +88,7 @@ def show(path):
   row = 0
   subdirs = [n for n in os.listdir(path) if os.path.isdir(os.path.join(path, n))]
   for d in sorted(subdirs):
-    if (d == ".git"):
+    if d.startswith(".") or d.startswith("__"):
       continue
     chosenDir = os.path.join(path, d)
     if runnable(chosenDir):
@@ -96,7 +96,7 @@ def show(path):
     else:
       bg_color = "#ee6"
     img = os.path.join(chosenDir, 'img.png')
-    if (os.path.isfile(img)):
+    if os.path.isfile(img):
         images[img] = PhotoImage(file=img)
         button = mkbutton(img, partial(chosen, chosenDir), bg_color, row, col)
     else:
@@ -104,7 +104,7 @@ def show(path):
         d = re.sub(r'_', ' ', d)
         button = mkbutton(d, partial(chosen, chosenDir), bg_color, row, col)
     col = col + 1
-    if (col == 5):
+    if col == 5:
       row = row + 1
       col = 0
 
