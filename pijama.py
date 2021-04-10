@@ -88,7 +88,7 @@ def show(path):
   row = 0
   subdirs = [n for n in os.listdir(path) if os.path.isdir(os.path.join(path, n))]
   for d in sorted(subdirs):
-    if d.startswith(".") or d.startswith("__"):
+    if d.startswith(".") or d.startswith("_"):
       continue
     chosenDir = os.path.join(path, d)
     if runnable(chosenDir):
